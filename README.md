@@ -19,7 +19,7 @@ Proyek ini bertujuan untuk menganalisis data pada E-Commerce Public Dataset. Tuj
 1. Clone repository ini ke komputer lokal Anda menggunakan perintah berikut:
 
    ```shell
-   git clonehttps://github.com/abdulrahmanwahid/Project-Analisis-Data-Pyhton-IDCAMP-2023.git
+   git clone https://github.com/abdulrahmanwahid/Project-Analisis-Data-Pyhton-IDCAMP-2023.git
    ```
 
 2. Pastikan Anda memiliki lingkungan Python yang sesuai dan pustaka-pustaka yang diperlukan. Anda dapat menginstal pustaka-pustaka tersebut dengan menjalankan perintah berikut:
@@ -34,12 +34,11 @@ Proyek ini bertujuan untuk menganalisis data pada E-Commerce Public Dataset. Tuj
 
     ```shell
     cd Project-data-analytics/streamlit/
-    streamlit run main.py
+    streamlit run dasboard.py
     ```
     Atau bisa dengan kunjungi website ini [Project Data Analytics]
-    (https://data-analytics-project.streamlit.app/)
+    (https://abdulstreamdata.streamlit.app/)
 
 ## Kontribusi
 Anda dapat berkontribusi pada proyek ini dengan melakukan pull request. Pastikan untuk menjelaskan perubahan yang Anda usulkan secara jelas dan menyeluruh.# Project-Analisis-Data-Pyhton-IDCAMP-2023
-# Project-Analisis-Data-Pyhton-IDCAMP-2023
 # Project-Analisis-Data-Pyhton-IDCAMP-2023
