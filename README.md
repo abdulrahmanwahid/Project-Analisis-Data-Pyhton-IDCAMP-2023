@@ -37,7 +37,7 @@ Proyek ini bertujuan untuk menganalisis data pada E-Commerce Public Dataset. Tuj
     streamlit run dasboard.py
     ```
     Atau bisa dengan kunjungi website ini [Project Data Analytics]
-    (https://abdulstreamdata.streamlit.app/)
+    [(https://abdulstreamdata.streamlit.app/)](https://abduldashboard.streamlit.app/)
 
 ## Kontribusi
 Anda dapat berkontribusi pada proyek ini dengan melakukan pull request. Pastikan untuk menjelaskan perubahan yang Anda usulkan secara jelas dan menyeluruh.# Project-Analisis-Data-Pyhton-IDCAMP-2023
