@@ -33,7 +33,7 @@ Proyek ini bertujuan untuk menganalisis data pada E-Commerce Public Dataset. Tuj
 1. Masuk ke direktori proyek (Local):
 
     ```shell
-    cd Project-data-analytics/streamlit/
+    cd /Project Analisis Data Pyhton IDCAMP 2023/streamlit
     streamlit run dasboard.py
     ```
     Atau bisa dengan kunjungi website ini [Project Data Analytics]
