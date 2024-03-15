@@ -4,6 +4,10 @@ import matplotlib.image as mpimg
 import seaborn as sns
 import streamlit as st
 import urllib
+from func import DataAnalyzer, BrazilMapPlotter
+from babel.numbers import format_currency
+sns.set(style='dark')
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Dataset
 datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", "order_estimated_delivery_date", "order_purchase_timestamp", "shipping_limit_date"]
@@ -30,9 +34,16 @@ with st.container():
     st.markdown(
       """I'm an Informatics Engineering student at Universitas Lampung.""")
     
-  with right_col:
-    lottie = "https://lottie.host/e347dd25-e8dc-487f-8cc8-2c823821bcf8/YJdCxFk1kR.json"
-    st_lottie(lottie, height=250)
+  # Logo Image
+    st.image("./dashboard/gcl.png")
+
+    # Date Range
+    start_date, end_date = st.date_input(
+        label="Select Date Range",
+        value=[min_date, max_date],
+        min_value=min_date,
+        max_value=max_date
+    )
     
 with st.container():
   st.write("---")
