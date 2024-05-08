@@ -177,7 +177,7 @@ with tab1:
     plt.xticks(fontsize=12)
     st.pyplot(fig)
 
-  with st.expander("See answer"):
+  with st.expander("See answer")
     st.write("""Tidak, para seller belum tersebar secara merata. Bahkan, hampir setengah dari total seller
     berasal dari state "SP". Dan setengah dari state yang ada memiliki total seller yang sangat jauh dibandingkan
     dengan 10 state terbanyak. Sehingga, perusahaan perlu mencari suatu mencari solusi atas permasalahan ini.""")
