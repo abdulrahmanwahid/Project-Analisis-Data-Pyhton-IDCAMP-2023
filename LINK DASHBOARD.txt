@@ -1,1 +1,1 @@
-https://wahiddashboard.streamlit.app
+https://wahidprojectdashboard.streamlit.app/
