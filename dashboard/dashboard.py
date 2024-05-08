@@ -16,7 +16,7 @@ all_df.sort_values(by="order_approved_at", inplace=True)
 all_df.reset_index(inplace=True)
 
 # Geolocation Dataset
-geolocation = pd.read_csv("./dataset/geolocation.csv")
+geolocation = pd.read_csv('./dataset/geolocation.csv')
 data = geolocation.drop_duplicates(subset='customer_unique_id')
 
 for col in datetime_cols:
@@ -25,16 +25,12 @@ for col in datetime_cols:
 min_date = all_df["order_approved_at"].min()
 max_date = all_df["order_approved_at"].max()
 
-with st.container():
-  left_col, right_col = st.columns(2)
-  
-  with left_col:
-    st.subheader('E-Commerce Pubilc Dataset Analysis')
-    st.title("Hi, Guys I'm Wahid :wave:")
-    st.markdown(
-      """I'm an Informatics Engineering student at Universitas Lampung.""")
-    
-  # Logo Image
+# Sidebar
+with st.sidebar:
+    # Title
+    st.title("WELCOME TO ABDUL RAHMAN WAHID DASHBOARD :))")
+
+    # Logo Image
     st.image("./dashboard/logo.png")
 
     # Date Range
@@ -44,30 +40,20 @@ with st.container():
         min_value=min_date,
         max_value=max_date
     )
-# Review Score
-st.subheader("Review Score")
-col1,col2 = st.columns(2)
 
-with col1:
-    avg_review_score = review_score.mean()
-    st.markdown(f"Average Review Score: **{avg_review_score}**")
+# Main
+main_df = all_df[(all_df["order_approved_at"] >= str(start_date)) & 
+                 (all_df["order_approved_at"] <= str(end_date))]
 
-with col2:
-    most_common_review_score = review_score.value_counts().index[0]
-    st.markdown(f"Most Common Review Score: **{most_common_review_score}**")
+function = DataAnalyzer(main_df)
+map_plot = BrazilMapPlotter(data, plt, mpimg, urllib, st)
 
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.barplot(x=review_score.index, 
-            y=review_score.values, 
-            order=review_score.index,
-            palette=["#068DA9" if score == common_score else "#D3D3D3" for score in review_score.index]
-            )
-
-plt.title("Rating by customers for service", fontsize=15)
-plt.xlabel("Rating")
-plt.ylabel("Count")
-plt.xticks(fontsize=12)
-st.pyplot(fig)
+daily_orders_df = function.create_daily_orders_df()
+sum_spend_df = function.create_sum_spend_df()
+sum_order_items_df = function.create_sum_order_items_df()
+review_score, common_score = function.review_score_df()
+state, most_common_state = function.create_bystate_df()
+order_status, common_status = function.create_order_status()
 
 # Title
 st.header("E-Commerce Dashboard :convenience_store:")
@@ -156,6 +142,31 @@ ax[1].tick_params(axis='x', labelsize=30)
 
 st.pyplot(fig)
 
+# Review Score
+st.subheader("Review Score")
+col1,col2 = st.columns(2)
+
+with col1:
+    avg_review_score = review_score.mean()
+    st.markdown(f"Average Review Score: **{avg_review_score}**")
+
+with col2:
+    most_common_review_score = review_score.value_counts().index[0]
+    st.markdown(f"Most Common Review Score: **{most_common_review_score}**")
+
+fig, ax = plt.subplots(figsize=(12, 6))
+sns.barplot(x=review_score.index, 
+            y=review_score.values, 
+            order=review_score.index,
+            palette=["#068DA9" if score == common_score else "#D3D3D3" for score in review_score.index]
+            )
+
+plt.title("Rating by customers for service", fontsize=15)
+plt.xlabel("Rating")
+plt.ylabel("Count")
+plt.xticks(fontsize=12)
+st.pyplot(fig)
+
 # Customer Demographic
 st.subheader("Customer Demographic")
 tab1, tab2, tab3 = st.tabs(["State", "Order Status", "Geolocation"])
@@ -196,5 +207,8 @@ with tab2:
 
 with tab3:
     map_plot.plot()
-  
-st.caption('Copyright (C) ABDUL RAHMAN WAHID DATA SCIENCE LEARNING PATH IDCAMP2023')
+
+    with st.expander("See Explanation"):
+        st.write('Sesuai dengan grafik yang sudah dibuat, ada lebih banyak pelanggan di bagian tenggara dan selatan. Informasi lainnya, ada lebih banyak pelanggan di kota-kota yang merupakan ibu kota (São Paulo, Rio de Janeiro, Porto Alegre, dan lainnya).')
+
+st.caption('Copyright (C) ABDUL RAHMAN WAHID IDCAMP DATA SCIENTIST PATH 2023')
