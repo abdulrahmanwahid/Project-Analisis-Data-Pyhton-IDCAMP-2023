@@ -196,13 +196,5 @@ with tab2:
 
 with tab3:
     map_plot.plot()
-  with st.expander("Kapan terakhir customer melakukan transaksi?"):
-    st.write("Customer ke-29064 merupakan customer yang paling terakhir melakukan transaksi.")
   
-  with st.expander("Seberapa sering seorang customer melakukan pembelian?"):
-    st.write("Setelah dilakukan analisis dan visualisasi, rupaya setiap customer hanya melakukan satu kali pembelian. Oleh karena itu, perusahaan harus menganalisis lebih lanjut mengapa hal tersebut dapat terjadi.")
-
-  with st.expander("Berapa banyak uang yang dihabiskan customer?"):
-    st.write("Customer ke-8476 merupakan customer yang paling banyak mengeluarkan uang yaitu hampir sebesar 14000.")
-
 st.caption('Copyright (C) ABDUL RAHMAN WAHID DATA SCIENCE LEARNING PATH IDCAMP2023')
