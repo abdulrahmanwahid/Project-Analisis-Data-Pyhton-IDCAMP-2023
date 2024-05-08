@@ -1,1 +1,1 @@
-https://abduldashboard.streamlit.app/
+https://projectabduldashboard.streamlit.app/
