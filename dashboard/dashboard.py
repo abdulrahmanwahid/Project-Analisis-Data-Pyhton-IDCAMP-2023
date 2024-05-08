@@ -44,18 +44,138 @@ with st.container():
         min_value=min_date,
         max_value=max_date
     )
-    
-with st.container():
-  st.write("---")
-  st.subheader("Apakah lokasi para seller tersebar merata di setiap state?")
+# Review Score
+st.subheader("Review Score")
+col1,col2 = st.columns(2)
 
-  fig, ax = plt.subplots(figsize=(16, 8))
-  sns.barplot(y=state_df['State'], x=state_df['Count'], orient='h', color='#1F9ED1')
-  ax.set_ylabel("State", fontsize=14)
-  ax.set_xlabel(None)
-  ax.set_title("Population of Seller in Each State", loc="center", fontsize=17)
-  
-  st.pyplot(fig)
+with col1:
+    avg_review_score = review_score.mean()
+    st.markdown(f"Average Review Score: **{avg_review_score}**")
+
+with col2:
+    most_common_review_score = review_score.value_counts().index[0]
+    st.markdown(f"Most Common Review Score: **{most_common_review_score}**")
+
+fig, ax = plt.subplots(figsize=(12, 6))
+sns.barplot(x=review_score.index, 
+            y=review_score.values, 
+            order=review_score.index,
+            palette=["#068DA9" if score == common_score else "#D3D3D3" for score in review_score.index]
+            )
+
+plt.title("Rating by customers for service", fontsize=15)
+plt.xlabel("Rating")
+plt.ylabel("Count")
+plt.xticks(fontsize=12)
+st.pyplot(fig)
+
+# Title
+st.header("E-Commerce Dashboard :convenience_store:")
+
+# Daily Orders
+st.subheader("Daily Orders")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    total_order = daily_orders_df["order_count"].sum()
+    st.markdown(f"Total Order: **{total_order}**")
+
+with col2:
+    total_revenue = format_currency(daily_orders_df["revenue"].sum(), "IDR", locale="id_ID")
+    st.markdown(f"Total Revenue: **{total_revenue}**")
+
+fig, ax = plt.subplots(figsize=(12, 6))
+ax.plot(
+    daily_orders_df["order_approved_at"],
+    daily_orders_df["order_count"],
+    marker="o",
+    linewidth=2,
+    color="#90CAF9"
+)
+ax.tick_params(axis="x", rotation=45)
+ax.tick_params(axis="y", labelsize=15)
+st.pyplot(fig)
+
+# Customer Spend Money
+st.subheader("Customer Spend Money")
+col1, col2 = st.columns(2)
+
+with col1:
+    total_spend = format_currency(sum_spend_df["total_spend"].sum(), "IDR", locale="id_ID")
+    st.markdown(f"Total Spend: **{total_spend}**")
+
+with col2:
+    avg_spend = format_currency(sum_spend_df["total_spend"].mean(), "IDR", locale="id_ID")
+    st.markdown(f"Average Spend: **{avg_spend}**")
+
+fig, ax = plt.subplots(figsize=(12, 6))
+ax.plot(
+    sum_spend_df["order_approved_at"],
+    sum_spend_df["total_spend"],
+    marker="o",
+    linewidth=2,
+    color="#90CAF9"
+)
+ax.tick_params(axis="x", rotation=45)
+ax.tick_params(axis="y", labelsize=15)
+st.pyplot(fig)
+
+# Order Items
+st.subheader("Order Items")
+col1, col2 = st.columns(2)
+
+with col1:
+    total_items = sum_order_items_df["product_count"].sum()
+    st.markdown(f"Total Items: **{total_items}**")
+
+with col2:
+    avg_items = sum_order_items_df["product_count"].mean()
+    st.markdown(f"Average Items: **{avg_items}**")
+
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(45, 25))
+
+colors = ["#068DA9", "#D3D3D3", "#D3D3D3", "#D3D3D3", "#D3D3D3"]
+
+sns.barplot(x="product_count", y="product_category_name_english", data=sum_order_items_df.head(5), palette=colors, ax=ax[0])
+ax[0].set_ylabel(None)
+ax[0].set_xlabel("Number of Sales", fontsize=30)
+ax[0].set_title("Produk paling banyak terjual", loc="center", fontsize=50)
+ax[0].tick_params(axis ='y', labelsize=35)
+ax[0].tick_params(axis ='x', labelsize=30)
+
+sns.barplot(x="product_count", y="product_category_name_english", data=sum_order_items_df.sort_values(by="product_count", ascending=True).head(5), palette=colors, ax=ax[1])
+ax[1].set_ylabel(None)
+ax[1].set_xlabel("Number of Sales", fontsize=30)
+ax[1].invert_xaxis()
+ax[1].yaxis.set_label_position("right")
+ax[1].yaxis.tick_right()
+ax[1].set_title("Produk paling sedikit terjual", loc="center", fontsize=50)
+ax[1].tick_params(axis='y', labelsize=35)
+ax[1].tick_params(axis='x', labelsize=30)
+
+st.pyplot(fig)
+
+# Customer Demographic
+st.subheader("Customer Demographic")
+tab1, tab2, tab3 = st.tabs(["State", "Order Status", "Geolocation"])
+
+with tab1:
+    most_common_state = state.customer_state.value_counts().index[0]
+    st.markdown(f"Most Common State: **{most_common_state}**")
+
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.barplot(x=state.customer_state.value_counts().index,
+                y=state.customer_count.values, 
+                data=state,
+                palette=["#068DA9" if score == most_common_state else "#D3D3D3" for score in state.customer_state.value_counts().index]
+                    )
+
+    plt.title("Number customers from State", fontsize=15)
+    plt.xlabel("State")
+    plt.ylabel("Number of Customers")
+    plt.xticks(fontsize=12)
+    st.pyplot(fig)
 
   with st.expander("See answer"):
     st.write("""Tidak, para seller belum tersebar secara merata. Bahkan, hampir setengah dari total seller
@@ -63,37 +183,25 @@ with st.container():
     dengan 10 state terbanyak. Sehingga, perusahaan perlu mencari suatu mencari solusi atas permasalahan ini.""")
 
 
-with st.container():
-  st.write("---")
+with tab2:
+    common_status_ = order_status.value_counts().index[0]
+    st.markdown(f"Most Common Order Status: **{common_status_}**")
 
-  st.subheader("Best Customer Based on RFM Parameters")
-  
-  fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(45, 10))
-  colors = ["#1F9ED1"]
-  
-  sns.barplot(x="recency", y="customer_name", data=rfm_df.sort_values(by="recency", ascending=True).head(10), palette=colors, ax=ax[0], orient='h')
-  ax[0].set_ylabel(None)
-  ax[0].set_xlabel(None)
-  ax[0].set_title("By Recency (days)", loc="center", fontsize=40)
-  ax[0].tick_params(axis='y', labelsize=15)
-  ax[0].tick_params(axis='x', labelsize=20)
-  
-  sns.barplot(x="frequency", y="customer_name", data=rfm_df.sort_values(by="frequency", ascending=False).head(10), palette=colors, ax=ax[1])
-  ax[1].set_ylabel(None)
-  ax[1].set_xlabel(None)
-  ax[1].set_title("By Frequency", loc="center", fontsize=40)
-  ax[1].tick_params(axis='y', labelsize=15)
-  ax[1].tick_params(axis='x', labelsize=20)
-  
-  sns.barplot(x="monetary", y="customer_name", data=rfm_df.sort_values(by="monetary", ascending=False).head(10), palette=colors, ax=ax[2])
-  ax[2].set_ylabel(None)
-  ax[2].set_xlabel(None)
-  ax[2].set_title("By Monetary", loc="center", fontsize=40)
-  ax[2].tick_params(axis='y', labelsize=15)
-  ax[2].tick_params(axis='x', labelsize=20)
-  
-  st.pyplot(fig)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.barplot(x=order_status.index,
+                y=order_status.values,
+                order=order_status.index,
+                palette=["#068DA9" if score == common_status else "#D3D3D3" for score in order_status.index]
+                )
+    
+    plt.title("Order Status", fontsize=15)
+    plt.xlabel("Status")
+    plt.ylabel("Count")
+    plt.xticks(fontsize=12)
+    st.pyplot(fig)
 
+with tab3:
+    map_plot.plot()
   with st.expander("Kapan terakhir customer melakukan transaksi?"):
     st.write("Customer ke-29064 merupakan customer yang paling terakhir melakukan transaksi.")
   
