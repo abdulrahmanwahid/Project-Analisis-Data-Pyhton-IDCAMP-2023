@@ -16,7 +16,7 @@ all_df.sort_values(by="order_approved_at", inplace=True)
 all_df.reset_index(inplace=True)
 
 # Geolocation Dataset
-geolocation = pd.read_csv("https://raw.githubusercontent.com/abdulrahmanwahid/Project-Analisis-Data-Pyhton-IDCAMP-2023/main/dataset/geolocation.csv")
+geolocation = pd.read_csv("https://raw.githubusercontent.com/abdulrahmanwahid/Project-Analisis-Data-Pyhton-IDCAMP-2023/main/dashboard/geolocation.csv")
 data = geolocation.drop_duplicates(subset='customer_unique_id')
 
 for col in datetime_cols:
