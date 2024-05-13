@@ -31,7 +31,7 @@ with st.sidebar:
     st.title("WELCOME TO ABDUL RAHMAN WAHID DASHBOARD :))")
 
     # Logo Image
-    st.image("./dashboard/logo.png")
+    st.image("https://github.com/abdulrahmanwahid/Project-Analisis-Data-Pyhton-IDCAMP-2023/blob/main/dashboard/logo.png")
 
     # Date Range
     start_date, end_date = st.date_input(
